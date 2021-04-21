@@ -1,4 +1,4 @@
 import "./promotion"
-import "./cart"
+// import "./cart"
 import "./product"
 import "./order"

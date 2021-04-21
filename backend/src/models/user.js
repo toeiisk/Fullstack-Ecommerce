@@ -4,6 +4,11 @@ import { composeWithMongoose } from "graphql-compose-mongoose";
 
 const { Schema } = mongoose;
 
+const CartItemSchema = new Schema({
+    productId: { type: String, required: true, index: true, ref: 'Product' },
+    amount: { type: Number, required: true, default: 1 }
+})
+
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -24,6 +29,7 @@ const UserSchema = new Schema({
     lastname: { type: String },
     address: { type: String },
     phone: { type: String },
+    cartItem: [CartItemSchema]
 });
 UserSchema.plugin(bcrypt);
 
