@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-mongoose.connect(`mongodb://localhost:27017`, {
+mongoose.Promise = Promise;
+mongoose.connect(`mongodb+srv://cluster0.8xcag.mongodb.net`, {
   dbName: "ecommerce",
-  // user: "borrabeer",
-  // pass: process.env.DB_PASSWORD,
+  user: "borrabeer",
+  pass: process.env.DB_PASSWORD,
   promiseLibrary: Promise,
   useNewUrlParser: true,
   useCreateIndex: true,

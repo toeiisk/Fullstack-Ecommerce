@@ -53,5 +53,5 @@ server.applyMiddleware({ app, path, cors: { origin: 'http://localhost:3000', cre
 
 const port = process.env.PORT ?? 3001;
 app.listen({ port }, () => {
-  console.log("E-Commerce Server ready at http://localhost:3001");
+  console.log(`E-Commerce Server ready at http://localhost:${port}`);
 });
