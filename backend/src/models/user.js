@@ -6,7 +6,10 @@ const { Schema } = mongoose;
 
 const CartItemSchema = new Schema({
     productId: { type: String, required: true, index: true, ref: 'Product' },
-    amount: { type: Number, required: true, default: 1 }
+    image: { type: String, required: false, index: true },
+    amount: { type: Number, required: true, default: 1 },
+    name: { type: String, required: true, index: true, ref: 'Product' },
+    price: { type: Number, required: true, index: true, ref: 'Product' },
 })
 
 const UserSchema = new Schema({
