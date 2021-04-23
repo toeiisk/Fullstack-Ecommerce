@@ -84,7 +84,6 @@ export const editItemCart = schemaComposer
         .map((item) => item.productId)
         .indexOf(productItem.productId);
       const ProductItem = await ProductModel.findById(productItem.productId);
-      console.log(ProductItem);
       const ProductStock = isEmpty(ProductItem) ? 0 : ProductItem.amount;
       if (itemIndex != -1) {
         productItem.amount <= 0
