@@ -1,6 +1,7 @@
 import { schemaComposer } from "graphql-compose";
-import { UserModel, UserTC } from "../../models";
+import { ProductModel, UserModel, UserTC } from "../../models";
 import { authMiddleware } from "../middleware";
+import isEmpty from "is-empty";
 
 export const createUser = UserTC.getResolver("createOne");
 export const updateUserById = UserTC.getResolver("updateById", [
@@ -35,16 +36,16 @@ export const addItemCart = schemaComposer
         itemIndex != -1
           ? (user.cartItem[itemIndex].amount += productItem.amount)
           : user.cartItem.push(productItem);
-        await user.save()
+        await user.save();
       }
       return user;
     },
   })
   .withMiddlewares([authMiddleware(false)]);
 
-export const removetemCart = schemaComposer
+export const removeItemCart = schemaComposer
   .createResolver({
-    name: "removetemCart",
+    name: "removeItemCart",
     args: {
       productId: "ID",
     },
@@ -82,10 +83,15 @@ export const editItemCart = schemaComposer
       const itemIndex = user.cartItem
         .map((item) => item.productId)
         .indexOf(productItem.productId);
+      const ProductItem = await ProductModel.findById(productItem.productId);
+      console.log(ProductItem);
+      const ProductStock = isEmpty(ProductItem) ? 0 : ProductItem.amount;
       if (itemIndex != -1) {
         productItem.amount <= 0
           ? user.cartItem.splice(itemIndex, 1)
-          : (user.cartItem[itemIndex].amount = productItem.amount);
+          : productItem.amount <= ProductStock
+          ? (user.cartItem[itemIndex].amount = productItem.amount)
+          : (user.cartItem[itemIndex].amount = ProductStock);
       }
       await user.save();
       return user;
