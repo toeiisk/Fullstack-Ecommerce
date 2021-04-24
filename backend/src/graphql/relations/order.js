@@ -37,16 +37,16 @@ const productItemResolver = schemaComposer.createResolver({
     }
 })
 
-OrderTC.addRelation(
-    'productItem',
-    {
-        resolver: () => productItemResolver,
-        prepareArgs: {
-            productItem: (source) => source.productItem
-        },
-        projection: { productItem: true }
-    }
-)
+// OrderTC.addRelation(
+//     'productItem',
+//     {
+//         resolver: () => productItemResolver,
+//         prepareArgs: {
+//             productItem: (source) => source.productItem
+//         },
+//         projection: { productItem: true }
+//     }
+// )
 
 const productPromotionResolver = schemaComposer.createResolver({
     name: "product",
