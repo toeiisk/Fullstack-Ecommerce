@@ -3,16 +3,29 @@ import { composeWithMongoose } from "graphql-compose-mongoose";
 
 const { Schema } = mongoose;
 
-const PruductItemSchema = new Schema({
+const ProductPromotionSchema = new Schema({
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    discount: { type: Number, required: true, default: 0 },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+})
+
+const ProductItemSchema = new Schema({
     productId: { type: String, required: true, index: true, ref: 'Product' },
-    amount: { type: Number, required: true, default: 1 },
+    name: { type: String, required: true },
+    description: { type: String, required: true },
     price: { type: Number, required: true },
-    promotionId: { type: String, required: true, index: true, ref: 'Promotion' },
+    discountedPrice: { type: Number, required: true },
+    discountedPercent: { type: Number, required: true },
+    amount: { type: Number, required: true },
+    image: { type: String },
+    activePromotions: [ProductPromotionSchema],
 })
 
 const OrderSchema = new Schema({
     userId: { type: String, required: true, index: true, ref: 'User' },
-    productItem: [PruductItemSchema],
+    productItem: [ProductItemSchema],
     paymentMethod: { type: String }
 }, { timestamps: { createdAt: 'purchaseDate' } });
 
