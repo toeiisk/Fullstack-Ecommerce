@@ -108,6 +108,7 @@ export const updateOrderStatusById = schemaComposer.createResolver({
     }
     const { orderId, orderStatus } = args;
     const order = await OrderModel.findById(orderId);
+    if (orderStatus !== "COMPLETE" || orderStatus !== "WAIT") throw new UserInputError("wrong order status")
     order.status = orderStatus;
     order.save();
     return order;
