@@ -9,6 +9,7 @@ import {
 } from "../../models";
 import { authMiddleware } from "../middleware";
 import isEmpty from "is-empty";
+import { UserInputError } from "apollo-server-express";
 
 export const updateOrderById = OrderTC.getResolver("updateById", [
   authMiddleware(true),
@@ -53,6 +54,9 @@ export const createOrder = schemaComposer.createResolver({
       }
     });
     productItem.forEach((item, index) => {
+      if (Products[index].amount < item.amount) {
+        throw new UserInputError("current stocks are not enough");
+      }
       const productPromotions = isEmpty(Products[index].activePromotions)
         ? []
         : Products[index].activePromotions;
@@ -80,7 +84,32 @@ export const createOrder = schemaComposer.createResolver({
       productItem,
       paymentMethod,
     });
-    await newOrder.save();
+    await newOrder.save().then(() => {
+      productItem.forEach(async (pd) => {
+        const originProduct = await ProductModel.findById(pd.productId);
+        originProduct.amount -= pd.amount;
+        originProduct.save();
+      });
+    });
     return newOrder;
   },
-});
+}).withMiddlewares([authMiddleware(false)]);
+
+export const updateOrderStatusById = schemaComposer.createResolver({
+  name: "updateOrderStatusById",
+  args: {
+    orderId: "ID!",
+    orderStatus: "String!",
+  },
+  type: OrderTC.getType(),
+  resolve: async ({ args, context }) => {
+    if (!context.user) {
+      return null;
+    }
+    const { orderId, orderStatus } = args;
+    const order = await OrderModel.findById(orderId);
+    order.status = orderStatus;
+    order.save();
+    return order;
+  },
+}).withMiddlewares([authMiddleware(true)]);
