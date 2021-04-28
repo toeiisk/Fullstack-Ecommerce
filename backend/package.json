@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node -r @babel/register -r dotenv/config src/app.js",
+    "build": "babel src --out-dir lib",
+    "start": "nodemon -r @babel/register -r dotenv/config src/app.js",
     "dev": "nodemon -r @babel/register -r dotenv/config src/app.js"
   },
   "author": "",
