@@ -65,7 +65,7 @@ ProductTC.addFields({
         },
       });
       if (isEmpty(totalOrders)) {
-        return 0
+        return 0;
       }
       const totalEarning = totalOrders
         .map((order) => order.productItem)
@@ -77,6 +77,16 @@ ProductTC.addFields({
       return totalEarning;
     },
     projection: { _id: true },
+  },
+  slug: {
+    type: "String",
+    resolve: (source) => {
+      return source.name
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[^\w-]+/g, "");
+    },
+    projection: { name: true },
   },
 });
 
