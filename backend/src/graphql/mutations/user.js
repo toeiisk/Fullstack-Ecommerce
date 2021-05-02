@@ -1,9 +1,40 @@
-import { schemaComposer } from "graphql-compose";
+import { UserInputError } from "apollo-server-express";
+import { schemaComposer, toInputObjectType } from "graphql-compose";
 import { ProductModel, UserModel, UserTC } from "../../models";
 import { authMiddleware } from "../middleware";
 import isEmpty from "is-empty";
 
-export const createUser = UserTC.getResolver("createOne");
+const UserITC = toInputObjectType(UserTC);
+
+export const createUser = schemaComposer.createResolver({
+  name: "createUser",
+  args: {
+    record: UserITC,
+  },
+  type: UserTC.getType(),
+  resolve: async ({ args }) => {
+    const { record } = args;
+    const isUsernameValid = await UserModel.find({ username: record.username });
+    const isEmailValid = await UserModel.find({ email: record.email });
+    if (!isEmpty(isUsernameValid)) {
+      throw new UserInputError("username already exist");
+    }
+    if (!isEmpty(isEmailValid)) {
+      throw new UserInputError("email already exist");
+    }
+    const newUser = new UserModel({
+      username: record.username,
+      password: record.password,
+      email: record.email,
+      firstname: record.firstname,
+      lastname: record.lastname,
+      address: record.address,
+      phone: record.phone,
+    });
+    await newUser.save();
+    return newUser;
+  },
+});
 export const updateUserById = UserTC.getResolver("updateById", [
   authMiddleware(false),
 ]);
