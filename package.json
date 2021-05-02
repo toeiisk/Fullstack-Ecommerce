@@ -46,7 +46,7 @@
 		"build": "craco build && (cd backend && npm install)",
 		"test": "craco test",
 		"eject": "react-scripts eject",
-		"start": "cd backend && npm start"
+		"start": "npm run start-client && (cd backend && npm start)"
 	},
 	"eslintConfig": {
 		"extends": [
