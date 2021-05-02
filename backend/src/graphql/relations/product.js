@@ -58,6 +58,7 @@ ProductTC.addFields({
     type: "Float",
     resolve: async (source) => {
       const totalOrders = await OrderModel.find({
+        status: "COMPLETE",
         productItem: {
           $elemMatch: {
             productId: source._id,
