@@ -70,7 +70,7 @@ ProductTC.addFields({
           pdItem.filter((pd) => pd.productId === source._id.toString())
         )
         .map((pd) => pd[0].discountedPrice * pd[0].amount)
-        .reduce((total, earn) => total + earn);
+        .reduce((total, earn) => total + earn, 0);
       return totalEarning;
     },
     projection: { _id: true },
