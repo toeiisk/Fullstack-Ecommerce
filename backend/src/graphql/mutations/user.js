@@ -3,8 +3,8 @@ import { schemaComposer, toInputObjectType } from "graphql-compose";
 import { ProductModel, UserModel, UserTC } from "../../models";
 import { authMiddleware } from "../middleware";
 import isEmpty from "is-empty";
-import { sendEmail } from "../util/email";
-import jsonwebtoken from 'jsonwebtoken'
+// import { sendEmail } from "../util/email";
+// import jsonwebtoken from 'jsonwebtoken'
 
 const UserITC = toInputObjectType(UserTC);
 
