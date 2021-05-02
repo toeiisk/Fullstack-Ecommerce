@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "start": "nodemon -r @babel/register -r dotenv/config src/app.js",
+    "start": "node -r dotenv/config lib/app.js",
     "dev": "nodemon -r @babel/register -r dotenv/config src/app.js"
   },
   "author": "",
@@ -26,9 +26,11 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mongoose": "^5.12.2",
-    "mongoose-bcrypt": "^1.9.0"
+    "mongoose-bcrypt": "^1.9.0",
+    "nodemailer": "^6.6.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.16",
     "@babel/core": "^7.13.10",
     "@babel/node": "^7.13.12",
     "@babel/preset-env": "^7.13.12",
