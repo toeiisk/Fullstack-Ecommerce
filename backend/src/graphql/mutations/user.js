@@ -3,6 +3,8 @@ import { schemaComposer, toInputObjectType } from "graphql-compose";
 import { ProductModel, UserModel, UserTC } from "../../models";
 import { authMiddleware } from "../middleware";
 import isEmpty from "is-empty";
+import { sendEmail } from "../util/email";
+import jsonwebtoken from 'jsonwebtoken'
 
 const UserITC = toInputObjectType(UserTC);
 
@@ -14,8 +16,10 @@ export const createUser = schemaComposer.createResolver({
   type: UserTC.getType(),
   resolve: async ({ args }) => {
     const { record } = args;
-    const isUsernameValid = await UserModel.find({ username: record.username });
-    const isEmailValid = await UserModel.find({ email: record.email });
+    const isUsernameValid = await UserModel.findOne({
+      username: record.username,
+    });
+    const isEmailValid = await UserModel.findOne({ email: record.email });
     if (!isEmpty(isUsernameValid)) {
       throw new UserInputError("username already exist");
     }
@@ -145,3 +149,20 @@ export const emptyCart = schemaComposer
     },
   })
   .withMiddlewares([authMiddleware(false)]);
+
+// export const forgotPassword = schemaComposer.createResolver({
+//   name: "forgotPassword",
+//   args: {
+//     email: "String!",
+//   },
+//   type: "String",
+//   resolve: async ({ args }) => {
+//     const { email } = args;
+//     const user = await UserModel.findOne({ email });
+//     if (isEmpty(user)) {
+//       throw new UserInputError("email not found");
+//     }
+//     const token = jsonwebtoken.sign({ _id: user._id }, process.env.SECRET_KEY ?? 'default-secret', { expiresIn: '1d', algorithm: 'HS256' })
+//     return sendEmail(email, "PRAMEKUB, Forgot Password Request", "Test Forget Password")
+//   },
+// });
