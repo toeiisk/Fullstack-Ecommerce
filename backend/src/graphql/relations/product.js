@@ -13,8 +13,8 @@ ProductTC.addFields({
     resolve: async (source) => {
       const productPromotion = await PromotionModel.find({
         productId: source._id,
-        startDate: { $lte: new Date() },
-        endDate: { $gt: new Date() },
+        startDate: { $lte: new Date(new Date().setUTCHours(new Date().getUTCHours() + 7)).toISOString() },
+        endDate: { $gt: new Date(new Date().setUTCHours(new Date().getUTCHours() + 7)).toISOString() },
       });
       return isEmpty(productPromotion)
         ? source.price
@@ -32,8 +32,8 @@ ProductTC.addFields({
     resolve: async (source) => {
       const productPromotion = await PromotionModel.find({
         productId: source._id,
-        startDate: { $lte: new Date() },
-        endDate: { $gt: new Date() },
+        startDate: { $lte: new Date(new Date().setUTCHours(new Date().getUTCHours() + 7)).toISOString() },
+        endDate: { $gt: new Date(new Date().setUTCHours(new Date().getUTCHours() + 7)).toISOString() },
       });
       return isEmpty(productPromotion)
         ? 0
@@ -48,8 +48,8 @@ ProductTC.addFields({
     resolve: (source) => {
       return PromotionModel.find({
         productId: source._id,
-        startDate: { $lte: new Date() },
-        endDate: { $gt: new Date() },
+        startDate: { $lte: new Date(new Date().setUTCHours(new Date().getUTCHours() + 7)).toISOString() },
+        endDate: { $gt: new Date(new Date().setUTCHours(new Date().getUTCHours() + 7)).toISOString() },
       });
     },
     projection: { _id: true },
