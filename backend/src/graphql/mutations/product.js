@@ -50,20 +50,18 @@ export const updateProductById = schemaComposer
       if (isEmpty(product)) {
         throw new UserInputError("Product not exist");
       }
-      const newProduct = new ProductModel({
-        name: record.name,
-        description: record.description,
-        price: record.price,
-        amount: record.amount,
-        image: record.image,
-        productType: record.productType,
-        slug: record.name
-          .toLowerCase()
-          .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, ""),
-      });
-      await newProduct.save();
-      return newProduct;
+      product.name = record.name;
+      product.description = record.description;
+      product.price = record.price;
+      product.amount = record.amount;
+      product.image = record.image;
+      product.productType = record.productType;
+      product.slug = record.name
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[^\w-]+/g, "");
+      await product.save();
+      return product;
     },
   })
   .withMiddlewares([authMiddleware(true)]);
