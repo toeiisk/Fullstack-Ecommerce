@@ -64,6 +64,9 @@ ProductTC.addFields({
           },
         },
       });
+      if (isEmpty(totalOrders)) {
+        return 0
+      }
       const totalEarning = totalOrders
         .map((order) => order.productItem)
         .map((pdItem) =>
