@@ -1,5 +1,6 @@
 import { UserInputError } from 'apollo-server-express'
 import { schemaComposer } from 'graphql-compose'
+import isEmpty from 'is-empty'
 import jsonwebtoken from 'jsonwebtoken'
 import { UserModel, UserTC } from '../../models'
 
@@ -21,7 +22,7 @@ export const userLogin = schemaComposer.createResolver({
     resolve: async ({ args }) => {
         const { username, password } = args
         const user = await UserModel.findOne({ username })
-        if (!user) {
+        if (isEmpty(user)) {
             throw new UserInputError("Username not found")
         }
         const isValid = await user.verifyPassword(password)
