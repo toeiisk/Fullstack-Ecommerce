@@ -27,6 +27,7 @@ const ProductItemSchema = new Schema({
 const enumOrderType = {
   WAIT: "Waiting",
   COMPLETE: "Complete",
+  CANCEL: "Cancel"
 };
 
 const OrderSchema = new Schema(

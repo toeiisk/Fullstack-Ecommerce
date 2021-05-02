@@ -98,10 +98,10 @@ ProductTC.addRelation("promotions", {
   projection: { _id: true },
 });
 
-ProductTC.addRelation("productTypes", {
-  resolver: () => ProductTypeTC.getResolver("findMany"),
-  prepareArgs: {
-    filter: (source) => ({ _id: { $in: source.productType } }),
-  },
-  projection: { productType: true },
-});
+// ProductTC.addRelation("productTypes", {
+//   resolver: () => ProductTypeTC.getResolver("findMany"),
+//   prepareArgs: {
+//     filter: (source) => ({ _id: { $in: source.productType } }),
+//   },
+//   projection: { productType: true },
+// });
