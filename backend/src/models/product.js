@@ -11,6 +11,7 @@ const ProductSchema = new Schema(
     amount: { type: Number, required: true, default: 0 },
     image: { type: String },
     productType: [{ type: String }],
+    slug: { type: String },
   },
   { timestamps: { createdAt: "createdAt" } }
 );

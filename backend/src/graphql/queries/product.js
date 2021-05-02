@@ -11,8 +11,6 @@ export const productBySlug = schemaComposer.createResolver({
   type: ProductTC.getType(),
   resolve: async ({ args }) => {
     const { slug } = args;
-    return ProductModel.findOne({
-      $text: { $search: slug.toLowerCase().replace(/-/g, " ") },
-    });
+    return ProductModel.findOne({ slug });
   },
 });

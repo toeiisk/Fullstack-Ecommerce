@@ -78,16 +78,6 @@ ProductTC.addFields({
     },
     projection: { _id: true },
   },
-  slug: {
-    type: "String",
-    resolve: (source) => {
-      return source.name
-        .toLowerCase()
-        .replace(/ /g, "-")
-        .replace(/[^\w-]+/g, "");
-    },
-    projection: { name: true },
-  },
 });
 
 ProductTC.addRelation("promotions", {
