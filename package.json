@@ -1,0 +1,24 @@
+{
+  "name": "pramekub-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm start",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toeiisk/Fullstack-Ecommerce.git"
+  },
+  "author": "PRAMEKUB",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toeiisk/Fullstack-Ecommerce/issues"
+  },
+  "homepage": "https://github.com/toeiisk/Fullstack-Ecommerce#readme",
+  "dependencies": {
+    "concurrently": "^6.0.2"
+  }
+}
