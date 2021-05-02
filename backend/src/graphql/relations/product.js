@@ -1,4 +1,5 @@
 import {
+  OrderModel,
   ProductTC,
   ProductTypeTC,
   PromotionModel,
@@ -50,6 +51,27 @@ ProductTC.addFields({
         startDate: { $lte: new Date() },
         endDate: { $gt: new Date() },
       });
+    },
+    projection: { _id: true },
+  },
+  totalEarning: {
+    type: "Float",
+    resolve: async (source) => {
+      const totalOrders = await OrderModel.find({
+        productItem: {
+          $elemMatch: {
+            productId: source._id,
+          },
+        },
+      });
+      const totalEarning = totalOrders
+        .map((order) => order.productItem)
+        .map((pdItem) =>
+          pdItem.filter((pd) => pd.productId === source._id.toString())
+        )
+        .map((pd) => pd[0].discountedPrice * pd[0].amount)
+        .reduce((total, earn) => total + earn);
+      return totalEarning;
     },
     projection: { _id: true },
   },
