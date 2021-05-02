@@ -2,6 +2,10 @@
 	"name": "ecommerce",
 	"version": "1.0.0",
 	"private": true,
+	"engines": {
+		"node": "15.6.x",
+		"npm": "7.4.x"
+	},
 	"dependencies": {
 		"@apollo/client": "^3.3.15",
 		"@craco/craco": "^6.1.1",
