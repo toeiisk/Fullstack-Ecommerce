@@ -41,7 +41,7 @@ export const updateProductById = schemaComposer
     name: "updateProductById",
     args: {
       record: ProductITC,
-      _id: "ID!",
+      _id: "MongoID!",
     },
     type: ProductTC.getType(),
     resolve: async ({ args }) => {
