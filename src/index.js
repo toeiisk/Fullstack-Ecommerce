@@ -10,7 +10,7 @@ import { PaymentProvider } from './context/payment'
 
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: 'http://54.179.143.107/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

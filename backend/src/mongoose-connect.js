@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 mongoose.Promise = Promise;
-mongoose.connect(`mongodb+srv://cluster0.8xcag.mongodb.net`, {
+mongoose.connect(`mongodb+srv://borrabeer.8xcag.mongodb.net`, {
   dbName: "ecommerce",
   user: "borrabeer",
   pass: process.env.DB_PASSWORD,
